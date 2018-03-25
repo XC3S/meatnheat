@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import { SearchService } from './../search.service';
+import { SearchService } from '../services/search.service';
 import { ProfileService } from '../services/profile.service';
 
 //import _ from "lodash";

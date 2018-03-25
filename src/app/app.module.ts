@@ -11,7 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component'
 import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 
-import { SearchService } from './search.service';
+import { SearchService } from './services/search.service';
 import { ProfileService } from './services/profile.service';
 import { CookieService } from './services/cookie.service';
 import { RecipeService } from './services/recipe.service';
