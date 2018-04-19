@@ -15,6 +15,7 @@ export class NavigationComponent implements OnInit {
 
   navigationOpen: boolean = false;
   searchResults:any[] = [];
+  searchInputValue:string;
 
   constructor(
     @Inject(DOCUMENT) private document: any, 
