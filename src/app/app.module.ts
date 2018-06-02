@@ -18,6 +18,7 @@ import { RecipeService } from './services/recipe.service';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RecipeCarouselComponent } from './recipe-carousel/recipe-carousel.component';
 import { LoadingComponent } from './loading/loading.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoadingComponent } from './loading/loading.component';
     CreateRecipeComponent,
     RecipeDetailComponent,
     RecipeCarouselComponent,
-    LoadingComponent
+    LoadingComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

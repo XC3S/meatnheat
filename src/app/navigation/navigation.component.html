@@ -1,9 +1,14 @@
 <div class="top-navigation">
   <a class="top-navigation-item" routerLink="/">Home</a>
-  <a class="top-navigation-item" routerLink="/profile">
-    <span *ngIf="!isLoggedIn()">Profile</span>
-    <span *ngIf="isLoggedIn()">{{getUserName()}}</span>
+  
+  <a *ngIf="!isLoggedIn()" class="top-navigation-item" routerLink="/login">
+    <span>Login</span>
   </a>
+
+  <a *ngIf="isLoggedIn()" class="top-navigation-item" routerLink="/profile">
+    <span>{{getUserName()}}</span>
+  </a>
+
   <div class="top-navigation-search">
     <input type="search" placeholder="search" [(ngModel)]="searchInputValue" (ngModelChange)="searchInput($event)">
     <ul class="search-result-list" style="color: #fff;">

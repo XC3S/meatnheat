@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="form sign-in">
+    <h1>Sign In</h1>
+    <input class="form-input" type="text" placeholder="username" [(ngModel)]="signInUserName"/><br>
+    <input class="form-input" type="password" placeholder="password" [(ngModel)]="signInPassword"/><br>
+    <button class="form-input" (click)="signIn()">Sign In</button>
+    <div class="loading-container">
+      <app-loading *ngIf="signInLoading"></app-loading>
+    </div>
+  </div>
+  
+
+  <div class="form sign-up">
+    <h1>Sign Up</h1>
+    <input class="form-input" type="text" placeholder="email" [(ngModel)]="signUpEmail"><br>
+    <input class="form-input" type="text" placeholder="username" [(ngModel)]="signUpUserName"><br>
+    <input class="form-input" type="password" placeholder="password" [(ngModel)]="signUpPassword"><br>
+    <button class="form-input" (click)="signUp()">Sign Up</button>
+    <div class="loading-container">
+      <app-loading *ngIf="signUpLoading"></app-loading>
+    </div>
+  </div>
+</div>
