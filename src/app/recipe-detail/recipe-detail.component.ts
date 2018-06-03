@@ -40,6 +40,11 @@ export class RecipeDetailComponent implements OnInit {
     return this.recipe.Username;
   }
 
+  getAuthorId(){
+    if(!this.recipe) return null;
+    return this.recipe.UserId;
+  }
+
   getDifficulty(){
     if(!this.recipe) return null;
     return this.recipe.Difficulty;

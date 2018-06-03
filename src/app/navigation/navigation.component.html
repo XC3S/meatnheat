@@ -5,7 +5,7 @@
     <span>Login</span>
   </a>
 
-  <a *ngIf="isLoggedIn()" class="top-navigation-item" routerLink="/profile">
+  <a *ngIf="isLoggedIn()" class="top-navigation-item" routerLink="/profile/{{getUserId()}}">
     <span>{{getUserName()}}</span>
   </a>
 

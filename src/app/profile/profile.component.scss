@@ -1,10 +1,12 @@
-.sign-in,
-.sign-up {
-    width: 400px;
-    margin: auto;
+.user-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 100%;
+    display: block;
+    margin: 0 auto;
 }
 
-.loading-container {
-    width: 400px;
-    height: 100px;
+.user-name {
+    text-align: center;
 }

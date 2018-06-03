@@ -1,7 +1,7 @@
 <div class="container recipe-detail">
     <h1>Title: {{getTitle()}}</h1>
     <img [src]="getImage()"/>
-    <div>Username: {{getAuthorName()}}</div>
+    <div>Username: <a routerLink="/profile/{{getAuthorId()}}">{{getAuthorName()}}</a></div>
     <div>Difficulty: {{getDifficulty()}}</div>
     <div>PreperationTime: {{getPreperationTime()}}</div>
 

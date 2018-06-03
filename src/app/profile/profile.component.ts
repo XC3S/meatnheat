@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ProfileService } from './../services/profile.service';
 import { Router } from '@angular/router'; 
+import { Profile } from 'selenium-webdriver/firefox';
 
 @Component({
   selector: 'app-profile',
@@ -12,35 +13,23 @@ export class ProfileComponent implements OnInit {
 
   constructor(private profileService:ProfileService,
               private router: Router) { }
-
-  signInUserName:string;
-  signInPassword:string;
-  signInLoading:boolean = false;
-
-  signUpUserName:string;
-  signUpEmail:string;
-  signUpPassword:string;
-  signUpLoading:boolean = false;
+              
+  profile:any = {};
 
   ngOnInit() {
-  }
-
-  signIn(){
-    this.signInLoading = true;
-    this.profileService.signIn(this.signInUserName,this.signInPassword,() => {
-      this.signInLoading = false;
-    },() => {
-      this.signInLoading = false;
-      this.router.navigateByUrl("/");
+    let userid = this.profileService.getUserId();
+    this.profileService.getPublicUserProfile(userid).subscribe(data => {
+      this.profile = data;
     });
   }
 
-  signUp(){
-    this.signUpLoading = true;
-    this.profileService.signUp(this.signUpUserName,this.signUpEmail,this.signUpPassword,() => {
-      this.signUpLoading = false;
-    },() => {
-      this.signUpLoading = false;
-    });
+  getUserName(){
+    // return a formatted username
+    return this.profile.UserName ? (this.profile.UserName.charAt(0).toUpperCase() + this.profile.UserName.slice(1)) : "";
+  }
+
+  getUserImage(){
+    // return the profile piction with a default picture as fallback
+    return this.profile.UserImage ? this.profile.UserImage : "https://i.stack.imgur.com/l60Hf.png";
   }
 }

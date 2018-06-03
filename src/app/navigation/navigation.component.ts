@@ -48,4 +48,8 @@ export class NavigationComponent implements OnInit {
     username = username.charAt(0).toUpperCase() + username.slice(1);
     return username;
   }
+
+  getUserId(){
+    return this.profileService.getUserId();
+  }
 }
