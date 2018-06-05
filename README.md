@@ -18,8 +18,17 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Usefull design tools
+Color:
+- http://colormind.io/
+- https://color.adobe.com
+
+Fonts:
+- https://fontpair.co/
+- https://www.typewolf.com/google-fonts
+
+
 ## Roadmap/Todos
-- recipe detail page
 - tool to clear the database and elasicsearch 
 - refresh jwtToken
 - use lowDB to manage your local storage
@@ -33,39 +42,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Important Notes
 - Zutaten sollten gruppierbar sein (z.B. Zutaten für die Beilage oder Zutaten für die Soße)
 - Welche Zeitenangaben sind wichtig für den User ?
-- das nutzerbild sollte immer am selben pfad liegen damit man sich bei änderungen nicht um ein update der datenbank und aller caches kümmern muss
-(wie geht man damit um wenn der user kein bild hochgeladen hat)
 
-
-## Recipe Data Structure
-{
-  "RecipeId|Type": "test_recipe_id|recipe",
-  "Title": "test title",
-  "UserId": "test_user_id",
-  "UserName":  "Max",
-  "UserImage": "image_url",
-  "Image": "image_url",
-  "PreperationTime": in_milliseconds,
-  "Difficulty": 1-3,
-  "Ingredients": [
-      {
-          "Amount": 1,
-          "Unit": UNIT_ID,
-          "Name": "INGREDIANT_NAME"
-      },
-      {
-          "Amount": 100,
-          "Unit": UNIT_ID,
-          "Name": "INGREDIANT_NAME"
-      }
-  ],
-  "Steps": [
-      {
-          "Type": "text",
-          "Text": "Kartoffeln gründlich waschen und mit dem Meersalz in einen Topf geben. Topf mit Wasser auffüllen, bis die Kartoffeln vollständig bedeckt sind. Kartoffeln zugedeckt bei mittlerer Hitze ca. 20 Minuten kochen.
-      }
-  ]
-}
 
 ## Elastic Search Recipes
 - userid (for faster access)
@@ -80,4 +57,3 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 - email and phone logins
 - first name
 - last name
-- picture
