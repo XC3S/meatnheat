@@ -29,8 +29,7 @@ Fonts:
 
 
 ## Roadmap/Todos
-- tool to clear the database and elasicsearch 
-- refresh jwtToken
+- tool to clear the database and elasicsearch
 - use lowDB to manage your local storage
 - follow other users
 - Dashboard - recently viewed

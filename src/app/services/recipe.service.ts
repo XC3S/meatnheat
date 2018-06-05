@@ -24,7 +24,7 @@ export class RecipeService {
       const httpOptions = {
         headers: new HttpHeaders({ 
           //'Content-Type': 'application/json',
-          'Authorization': this.profileService.jwtToken
+          'Authorization': this.profileService.getAuthorizer()
         })
       };
 

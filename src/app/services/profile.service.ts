@@ -10,17 +10,18 @@ import {
   CognitoUserPool,
   ICognitoUserPoolData,
   ICognitoUserData,
-  ICognitoUserAttributeData
+  ICognitoUserAttributeData,
+  CognitoIdToken
 } from 'amazon-cognito-identity-js';
 import * as CognitoIdentity from "aws-sdk/clients/cognitoidentity";
 import { CookieService } from "../services/cookie.service";
 
 @Injectable()
 export class ProfileService {
-  jwtToken:any;
   userPool:CognitoUserPool;
-  username:string;
-  userid:string;
+  user:CognitoUser;
+  userAttributes:CognitoUserAttribute[] = [];
+  idToken:CognitoIdToken;
 
   poolData:ICognitoUserPoolData = {
     UserPoolId : 'eu-central-1_LaVer2K0o',
@@ -32,15 +33,38 @@ export class ProfileService {
     private cookieService:CookieService
   ) {
     this.userPool = new CognitoUserPool(this.poolData);
-    if(this.cookieService.getCookie("token")){
-      this.jwtToken = this.cookieService.getCookie("token");
+    this.updateSession();
+  }
+
+  updateSession(callback?){
+    this.user = this.userPool.getCurrentUser();
+
+    if(this.user) {
+      this.user.getSession((err, session) => {
+        if (err) {
+           alert(err);
+            return;
+        }
+
+        this.idToken = session.getIdToken();
+        console.log("idToken:",this.idToken);
+
+        this.user.getUserAttributes((err,attrs:CognitoUserAttribute[]) => {
+          this.userAttributes = attrs;
+          console.log("logged in as: ",this.user);
+          console.log("with attributes:",this.userAttributes);
+          if(callback) callback();
+        });
+      });
     }
-    if(localStorage.getItem("username")){
-      this.username = localStorage.getItem("username");
-    }
-    if(localStorage.getItem("userid")){
-      this.userid = localStorage.getItem("userid");
-    }
+  }
+
+  getCognitoAttribute(name:string){
+    var result;
+    this.userAttributes.forEach((entry:CognitoUserAttribute) => {
+      if (entry.getName() == name) result = entry.getValue();
+    });
+    return result;
   }
 
   signIn(username:string,password:string,failure,success):void {
@@ -57,26 +81,9 @@ export class ProfileService {
 
     const cognitoUser:CognitoUser = new CognitoUser(cognitoUserData);
 
-    
-
     cognitoUser.authenticateUser(authenticationDetails,{
       onSuccess: (result) => {
-        cognitoUser.getUserAttributes((err,attrs:CognitoUserAttribute[]) => {
-          attrs.forEach((attr:CognitoUserAttribute) => {
-            if(attr.getName() == "sub"){
-              this.userid = attr.getValue();
-              localStorage.setItem("userid",this.userid);
-            }
-          });
-        });
-
-        console.log("login result:",this.userid);
-        console.log('access token + ' + result.getIdToken().getJwtToken());
-        this.username = username;
-        localStorage.setItem("username",this.username);
-        this.jwtToken = result.getIdToken().getJwtToken();
-        this.cookieService.setCookie("token",this.jwtToken,365);
-        success();
+        this.updateSession(success);
       },
       onFailure: (error) => {
         alert(error);
@@ -99,6 +106,9 @@ export class ProfileService {
 
     this.userPool.signUp(username,password,attributeList,null,(error,result) => {
       console.log(username,password,attributeList);
+      
+      // @TODO: the results contains the cognito User object... so maybe presign-in the user before he verified his email
+
       if(error){
         alert(error);
         failure();
@@ -110,20 +120,31 @@ export class ProfileService {
     });
   };
 
+  signOut(){
+    this.user.signOut();
+    this.user = null;
+    this.userAttributes = [];
+    this.idToken = null;
+  }
+
   getPublicUserProfile(userid:string):any {
-    return this.http.get("https://jbfzhbbbkl.execute-api.eu-central-1.amazonaws.com/prod/profile/" + this.userid);
+    return this.http.get("https://jbfzhbbbkl.execute-api.eu-central-1.amazonaws.com/prod/profile/" + this.getUserId());
   }
 
   isLoggedIn():boolean {
-    return !!this.jwtToken;
+    return !!this.user;
+  }
+
+  getAuthorizer() {
+    return this.idToken.getJwtToken();
   }
 
   getUsername():string {
-    return this.username || "";
+    return this.user.getUsername() || "";
   }
 
   getUserId():string {
-    return this.userid || "";
+    return this.getCognitoAttribute("sub") || "";
   }
 
 }

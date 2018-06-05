@@ -32,4 +32,9 @@ export class ProfileComponent implements OnInit {
     // return the profile piction with a default picture as fallback
     return this.profile.UserImage ? this.profile.UserImage : "https://i.stack.imgur.com/l60Hf.png";
   }
+
+  signOut(){
+    this.profileService.signOut();
+    this.router.navigateByUrl("/");
+  }
 }
