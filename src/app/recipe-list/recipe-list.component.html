@@ -1,0 +1,5 @@
+<div class="list-container">
+  <a *ngFor="let entry of recipes" routerLink="/{{userid}}/{{entry.UserId}}">
+    <img [src]="entry.Image">
+  </a>
+</div>

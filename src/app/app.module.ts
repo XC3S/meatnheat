@@ -19,6 +19,7 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RecipeCarouselComponent } from './recipe-carousel/recipe-carousel.component';
 import { LoadingComponent } from './loading/loading.component';
 import { LoginComponent } from './login/login.component';
+import { RecipeListComponent } from './recipe-list/recipe-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LoginComponent } from './login/login.component';
     RecipeDetailComponent,
     RecipeCarouselComponent,
     LoadingComponent,
-    LoginComponent
+    LoginComponent,
+    RecipeListComponent
   ],
   imports: [
     BrowserModule,

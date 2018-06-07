@@ -2,4 +2,6 @@
   <img class="user-image" src="{{getUserImage()}}">
   <h1 class="user-name">{{getUserName()}}</h1>
   <a (click)="signOut()">Logout</a>
+
+  <app-recipe-list [userid]="getUserId()" [recipes]="getUserRecipes()"></app-recipe-list>
 </div>

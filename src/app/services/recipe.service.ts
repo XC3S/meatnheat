@@ -19,6 +19,10 @@ export class RecipeService {
     return this.http.post("https://jbfzhbbbkl.execute-api.eu-central-1.amazonaws.com/prod/getrecipe",body);
   }
 
+  getRecipesFromUser(userid:string) {
+    return this.http.get("https://jbfzhbbbkl.execute-api.eu-central-1.amazonaws.com/prod/recipe/" + userid);
+  }
+
   createRecipe(recipe:any,failure,success):void {
     if(this.profileService.isLoggedIn()){
       const httpOptions = {

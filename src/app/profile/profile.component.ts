@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ProfileService } from './../services/profile.service';
-import { Router } from '@angular/router'; 
-import { Profile } from 'selenium-webdriver/firefox';
+import { RecipeService} from './../services/recipe.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -12,14 +12,20 @@ import { Profile } from 'selenium-webdriver/firefox';
 export class ProfileComponent implements OnInit {
 
   constructor(private profileService:ProfileService,
+              private recipeService:RecipeService,
               private router: Router) { }
               
   profile:any = {};
-
+  recipes:any = [];
+  
   ngOnInit() {
     let userid = this.profileService.getUserId();
     this.profileService.getPublicUserProfile(userid).subscribe(data => {
       this.profile = data;
+    });
+    this.recipeService.getRecipesFromUser(userid).subscribe(data => {
+      this.recipes = data;
+      console.log("recipies:", this.recipes);
     });
   }
 
@@ -31,6 +37,14 @@ export class ProfileComponent implements OnInit {
   getUserImage(){
     // return the profile piction with a default picture as fallback
     return this.profile.UserImage ? this.profile.UserImage : "https://i.stack.imgur.com/l60Hf.png";
+  }
+
+  getUserId(){
+    return this.profileService.getUserId();
+  }
+
+  getUserRecipes(){
+    return this.recipes ? this.recipes : [];
   }
 
   signOut(){
