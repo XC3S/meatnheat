@@ -50,6 +50,6 @@ export class NavigationComponent implements OnInit {
   }
 
   getUserId(){
-    return this.profileService.getUserId();
+    return this.profileService.getCognitoUserId();
   }
 }

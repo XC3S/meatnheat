@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ProfileService } from './../services/profile.service';
 import { RecipeService} from './../services/recipe.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -13,20 +13,38 @@ export class ProfileComponent implements OnInit {
 
   constructor(private profileService:ProfileService,
               private recipeService:RecipeService,
+              private route: ActivatedRoute,
               private router: Router) { }
               
   profile:any = {};
   recipes:any = [];
-  
+  userId:string = "";
   ngOnInit() {
-    let userid = this.profileService.getUserId();
-    this.profileService.getPublicUserProfile(userid).subscribe(data => {
-      this.profile = data;
+    this.profileService.checkCognitoUser(()=>{
+      this.route.params.subscribe(params => {
+        this.userId = params.userId;
+        if(this.userId == this.profileService.getCognitoUserId()){
+          //@TODO: load a private profile here
+          this.profileService.getPublicUserProfile(this.profileService.getCognitoUserId()).subscribe(data => {
+            this.profile = data;
+          });    
+        }
+        else {
+          this.profileService.getPublicUserProfile(this.userId).subscribe(data => {
+            this.profile = data;
+          });
+        }
+        this.recipeService.getRecipesFromUser(this.userId).subscribe(data => {
+          this.recipes = data;
+          console.log("recipies:", this.recipes);
+        });
+      });
     });
-    this.recipeService.getRecipesFromUser(userid).subscribe(data => {
-      this.recipes = data;
-      console.log("recipies:", this.recipes);
-    });
+  }
+
+  isMyProfile(){
+    if(!this.profileService.isLoggedIn()) return false;
+    return this.userId == this.profileService.getCognitoUserId();
   }
 
   getUserName(){
@@ -40,7 +58,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserId(){
-    return this.profileService.getUserId();
+    return this.profileService.getCognitoUserId();
   }
 
   getUserRecipes(){

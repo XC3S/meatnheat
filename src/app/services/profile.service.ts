@@ -36,23 +36,29 @@ export class ProfileService {
     this.updateSession();
   }
 
+  checkCognitoUser(callback?){
+      if(!this.user){
+        this.updateSession(callback);
+      }
+      else {
+        callback();
+      }
+  }
+
   updateSession(callback?){
     this.user = this.userPool.getCurrentUser();
 
     if(this.user) {
       this.user.getSession((err, session) => {
         if (err) {
-           alert(err);
-            return;
+          alert(err);
+          return;
         }
 
         this.idToken = session.getIdToken();
-        console.log("idToken:",this.idToken);
 
         this.user.getUserAttributes((err,attrs:CognitoUserAttribute[]) => {
           this.userAttributes = attrs;
-          console.log("logged in as: ",this.user);
-          console.log("with attributes:",this.userAttributes);
           if(callback) callback();
         });
       });
@@ -128,7 +134,7 @@ export class ProfileService {
   }
 
   getPublicUserProfile(userid:string):any {
-    return this.http.get("https://jbfzhbbbkl.execute-api.eu-central-1.amazonaws.com/prod/profile/" + this.getUserId());
+    return this.http.get("https://jbfzhbbbkl.execute-api.eu-central-1.amazonaws.com/prod/profile/" + userid);
   }
 
   isLoggedIn():boolean {
@@ -143,7 +149,7 @@ export class ProfileService {
     return this.user.getUsername() || "";
   }
 
-  getUserId():string {
+  getCognitoUserId():string {
     return this.getCognitoAttribute("sub") || "";
   }
 
