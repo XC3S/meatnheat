@@ -1,5 +1,5 @@
 <div class="list-container">
-  <a *ngFor="let entry of recipes" routerLink="/{{userid}}/{{entry.UserId}}">
+  <a *ngFor="let entry of recipes" routerLink="/{{userid}}/{{entry.RecipeId}}">
     <img [src]="entry.Image">
   </a>
 </div>
