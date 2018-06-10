@@ -1,18 +1,28 @@
-<div class="container recipe-detail">
-    <h1>Title: {{getTitle()}}</h1>
-    <img [src]="getImage()"/>
-    <div>Username: <a routerLink="/profile/{{getAuthorId()}}">{{getAuthorName()}}</a></div>
-    <div>Difficulty: {{getDifficulty()}}</div>
-    <div>PreperationTime: {{getPreperationTime()}}</div>
-
-    <div>
-        <h3>Ingredients:</h3>
-        <p *ngFor="let entry of getIngredients()">
-            {{entry.Amount}} {{entry.Unit}} {{entry.Name}}
-        </p>
+<div class="grid-container">
+    <div class="grid-item-title">
+        <h1>{{getTitle()}}</h1>
+    </div>
+    
+    <div class="grid-item-image">
+        <img [src]="getImage()"/>
     </div>
 
-    <div>
+    <div class="grid-item-infos">
+        <div>Author: <a routerLink="/profile/{{getAuthorId()}}">{{getAuthorName()}}</a></div>
+        <div>schwierigkeitsgrad: {{getDifficulty()}}</div>
+        <div>PreperationTime: {{getPreperationTime()}}</div>
+    </div>
+
+    <div class="grid-item-ingredients">
+        <h3>Ingredients:</h3>
+        <ul>
+            <li *ngFor="let entry of getIngredients()">
+                {{entry.Amount}} {{entry.Unit}} {{entry.Name}}
+            </li>    
+        </ul>
+    </div>
+
+    <div class="grid-item-steps">
         <h3>Steps:</h3>
         <p *ngFor="let entry of getSteps(); let i = index"><b>{{i + 1}}.</b>{{entry.Text}}</p>
     </div>

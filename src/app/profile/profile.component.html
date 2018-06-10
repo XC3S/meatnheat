@@ -3,8 +3,8 @@
   <h1 class="user-name">{{getUserName()}}</h1>
 
   <div class="action-bar" *ngIf="isMyProfile()">
-    <a (click)="signOut()">Logout</a>
     <a routerLink="/createRecipe">Create Recipe</a>
+    <a class="right" (click)="signOut()">Logout</a>
   </div>
   
 
