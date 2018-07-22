@@ -1,3 +1,6 @@
+WARNING: THE EXAMPLE ELASTIC SEARCH SERVICE HAS BEEN SHUT DOWN
+
+
 # Meatnheat
 
 The next generation cooking platform. Developed using AWS services and a angular frontend.
